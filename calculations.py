@@ -2,9 +2,9 @@ import numpy as np
 import fort_analysis as fort
 import helper as hlp
 
-fname = "../npt.dcd"
-groname = "../npt.gro"
-ndxname="../npt.ndx"
+fname = "npt.dcd"
+groname = "npt.gro"
+ndxname="npt.ndx"
 funit = 500
 CV = []
 avgr = np.array([0.,0.,0.])
