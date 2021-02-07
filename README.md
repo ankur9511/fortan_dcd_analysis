@@ -24,6 +24,13 @@ Example python code in file:
   - skips header when reading frames
   - reading frames
   - doing h-bond and first hydration shell calculation with distance and angle cutoff criteria
+ 
+Test the python file on a N,P=1bar,T=300K simulation of SPC/E water in 5nm cubic box
+
+`
+ ./script "createmodule" 
+  python calculation.py
+`
 
 Conversion for .xtc to .dcd using catdcd (https://www.ks.uiuc.edu/Development/MDTools/catdcd/)
 
