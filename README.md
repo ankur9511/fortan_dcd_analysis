@@ -39,6 +39,6 @@ This file demonstates
 
 
 `
-  python calculation.py
+  python calculations.py
 `
 
