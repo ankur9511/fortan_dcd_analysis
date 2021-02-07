@@ -29,6 +29,7 @@ Test the python file on a N,P=1bar,T=300K simulation of SPC/E water in 5nm cubic
 
 `
  ./script "createmodule" 
+ 
   python calculation.py
 `
 
