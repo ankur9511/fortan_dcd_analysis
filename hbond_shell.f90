@@ -19,8 +19,8 @@
 !end subroutine hbond
 
 subroutine nhbond_nshell(shell1, npairs, nshell1, &
-                        & centers,Hcenters, &
-                        & shell,Hshell, &
+                        & centers,Hcenters1,Hcenters2, &
+                        & shell,Hshell1,Hshell2, &
                         & r,box,binv,dist2,cosangle_crit, &
                         & tot_atom,ncenters,nshell)
 
@@ -34,11 +34,13 @@ real(8), intent(in), dimension(0:2) :: box,binv
 integer, intent(in), dimension(0:ncenters-1) :: centers
 integer, intent(in), dimension(0:nshell-1) :: shell
 real(4), intent(in) :: dist2 ! xl, xh, yl, yh, zl, zh
-real(4), optional, intent(in) :: cosangle_crit
-integer, optional, intent(in), dimension(0:ncenters-1,0:1) :: Hcenters
-integer, optional, intent(in), dimension(0:nshell-1,0:1) :: Hshell
+real(4), intent(in) :: cosangle_crit
+integer, intent(in), dimension(0:ncenters-1) :: Hcenters1,Hcenters2
+integer, intent(in), dimension(0:nshell-1) :: Hshell1,Hshell2
 real(4), dimension(0:2) :: dr
 real(4) :: dr2,costheta
+integer, dimension(0:ncenters-1,0:1) :: Hcenters
+integer, dimension(0:nshell-1,0:1) :: Hshell
 integer :: i,j,k,flag
 integer, intent(out) :: npairs,nshell1
 integer, intent(out), dimension(0:nshell-1) :: shell1
@@ -46,14 +48,27 @@ npairs = 0
 shell1(:) = -1
 nshell1 = 0
 
+Hshell(:,:) = -1
+Hshell(:,0) = Hshell1(:)
+Hshell(:,1) = Hshell2(:)
+
+Hcenters(:,:) = -1
+Hcenters(:,0) = Hcenters1(:)
+Hcenters(:,1) = Hcenters2(:)
+
+!print*, nshell,ncenters
+!print*, shell
+
 do j = 0,ncenters-1        
     do i = 0,nshell-1   
         flag = -1
         if (centers(j)/=shell(i)) then
+
             call pbcdr(dr,r(centers(j)-1,:), &
                        & r(shell(i)-1,:),box,binv)
             dr2 = dr(0)*dr(0) + dr(1)*dr(1) + dr(2)*dr(2)
             costheta = 0.0
+
             if (Hcenters(j,0)/=-1) then
                 costheta = 0.0
                 call cosangle(costheta, &
@@ -81,11 +96,11 @@ do j = 0,ncenters-1
             end if
                
             if (Hshell(i,0)/=-1) then
-                        costheta = 0.0
-                        call cosangle(costheta, &
-                                     & r(shell(i)-1,:), &
-                                     & r(Hshell(i,0)-1,:), &
-                                     & r(centers(j)-1,:),box,binv)
+                costheta = 0.0
+                call cosangle(costheta, &
+                             & r(shell(i)-1,:), &
+                             & r(Hshell(i,0)-1,:), &
+                             & r(centers(j)-1,:),box,binv)
 
                 if (dr2 <= dist2 .and. costheta >= cosangle_crit) then
                     npairs = npairs+1
@@ -112,7 +127,6 @@ do j = 0,ncenters-1
                    nshell1 = nshell1+1
                 end if
             end if
-
             !if (j == ncenters1-1) then
             !   if ( .NOT. ANY(shellc11==i)) then
             !      notshellc11(nnshellc11) = i

@@ -59,7 +59,7 @@ def getnameandid_fromndx(ndxname):
 	for dat in data:
 		try:	
 			dat2 = dat.split(']')
-			atomid[dat2[0].strip().split('NAME_')[-1]] = np.array(dat2[1].strip().split()).astype(int)
+			atomid[dat2[0].strip().split('NAME_')[-1]] = np.array(dat2[1].strip().split()).astype(np.int32)
 		except IndexError:
 			continue
 	return atomid
