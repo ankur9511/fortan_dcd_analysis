@@ -50,6 +50,19 @@ Make sure you set the python2, intel, and gcc environment
 
 -----
 #### Quick and dirty use
+
+`
+module load python/2.7.15
+`
+
+`
+module load gcc
+`
+
+`
+module load intel
+`
+
 `
 git clone https://github.com/ankur9511/fortan_dcd_analysis.git
 `
