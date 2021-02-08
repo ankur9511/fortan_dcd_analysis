@@ -1,8 +1,5 @@
 #!/bin/bash
 
-source ~/.bashrc
-iter=2
-#module load python/2.7.15
 
 if [[ "$1" == *"createmodule"* ]]
 then
@@ -11,7 +8,9 @@ f2py -c \
 *.f90 \
 -m fort_analysis \
 --opt='-O3 -fopenmp' --fcompiler=intelem --f90flags='-fopenmp -g -traceback' --compiler=unix -DF2PY_REPORT_ATEXIT
+if [ $? -eq 0 ]; then
 echo "module created"
+fi
 fi
 
 
