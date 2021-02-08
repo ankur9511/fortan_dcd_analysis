@@ -1,4 +1,5 @@
 subroutine waterdipole(costheta,rO,rH1,rH2,box,binv)
+implicit none
 real(4), intent(in), dimension(0:2) :: rO,rH1,rH2
 real(4), dimension(0:2) :: rOH1,rOH2,rOHH
 real(8), intent(in), dimension(0:2) :: box,binv

@@ -1,6 +1,7 @@
 subroutine endtoend_orient(costheta,box,binv,headcoord, &
                           & backbone,allcoord,nbackbone, &
                           & nallcoord)
+implicit none
 integer, intent(in) :: nbackbone, nallcoord
 real(4), intent(in), dimension(0:nallcoord-1,0:2) :: allcoord
 real(4), intent(in), dimension(0:nbackbone-1) :: backbone
@@ -40,14 +41,18 @@ real(4), intent(out), dimension(0:2) :: avgr
 real(4), dimension(0:2) :: dra
 integer :: i = 0, j = 0 , ja = 0
 dra(:) = 0.0
+avgr(:) = 0.
 
 do j = 0, narr-1
 
 ja = ridarr(j)-1
+!print*, allcoord(ja,:)
 avgr(:) = avgr(:) + marr(j)*allcoord(ja,:)
 
 end do
 
-avgr = avgr/(SUM(marr))
-
+avgr(:) = avgr(:)/(SUM(marr))
+!print*, marr
+!print*, ridarr
+!print*, avgr
 end subroutine average_loc

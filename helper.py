@@ -64,10 +64,17 @@ def getnameandid_fromndx(ndxname):
 			continue
 	return atomid
 
+def writeCVhead(heads,fname):
+	with open(fname,'w') as f:
+		f.write('# '+' '.join(heads)+'\n')
+def writeCVstyle(arr,fname):
+	with open(fname,'a+') as f:
+		f.write(' '+' '.join(str(val) for val in arr)+'\n')
 def getmass(groname):
 	mass = {}
 	mass['OW'] = 16.
 	mass['HW'] = 1.008
+	mass['MW'] = 0.
 	mass['Si'] = 28.08550
 	mass['H'] = 1.00794
 	mass['O'] = 15.9994

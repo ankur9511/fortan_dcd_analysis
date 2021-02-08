@@ -1,16 +1,19 @@
 subroutine opendcd(filenum,filename)
+implicit none
 integer, intent(in) :: filenum
 character(LEN=200), intent(in) :: filename
 open(unit = filenum, file = trim(filename), form = "UNFORMATTED", status = "OLD")
 end subroutine opendcd
 
 subroutine closedcd(filenum)
+implicit none
 integer, intent(in) :: filenum
 close(filenum)
 end subroutine closedcd
 
 
 subroutine skipframedcd(filenum)
+implicit none
 integer, intent(in) :: filenum
 read(UNIT = filenum) 
 read(UNIT = filenum) 
@@ -19,6 +22,7 @@ read(UNIT = filenum)
 end subroutine skipframedcd
 
 subroutine skipheaderdcd(filenum)
+implicit none
 integer, intent(in) :: filenum
 read(UNIT = filenum) 
 read(UNIT = filenum) 
@@ -67,6 +71,7 @@ close(unit = 4000)
 end subroutine readheaderdcd
 
 subroutine readframedcd(rcoord,box,filenum,tot_atom)
+implicit none
 integer, intent(in) :: filenum
 integer, intent(in) :: tot_atom
 real(8), dimension(6) :: box6
@@ -80,3 +85,23 @@ box(0) = box6(1)
 box(1) = box6(3)
 box(2) = box6(6)
 end subroutine readframedcd
+
+subroutine readwrappedframedcd(rcoord,box,aid,filenum,tot_atom)
+implicit none
+integer, intent(in) :: filenum
+integer, intent(in) :: tot_atom,aid
+real(8), dimension(6) :: box6
+real(8), intent(out), dimension(0:2) :: box
+real(8), dimension(0:2) :: binv
+real(4), intent(out), dimension(0:tot_atom-1,0:2) :: rcoord
+read(UNIT = filenum) box6
+read(UNIT = filenum) rcoord(:,0)
+read(UNIT = filenum) rcoord(:,1)
+read(UNIT = filenum) rcoord(:,2)
+
+box(0) = box6(1)
+box(1) = box6(3)
+box(2) = box6(6)
+binv(:) = 1.0/box(:)
+call pbcwrap(rcoord,rcoord(aid-1,:),tot_atom,box,binv)
+end subroutine readwrappedframedcd

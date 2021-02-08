@@ -1,4 +1,5 @@
 subroutine radgyr_tensor(rg,r,ID,mC,tot_atom,N,box,binv)
+implicit none
 integer, intent(in) :: N,tot_atom
 real(4), intent(in), dimension(0:tot_atom-1,0:2) :: r
 integer, intent(in), dimension(0:N-1) :: ID
