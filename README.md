@@ -44,3 +44,24 @@ To verify, you should see stuff printed on your terminal as contained in file "o
   python calculations.py
 `
 
+-----
+#### Quick and dirty use
+`
+git clone https://github.com/ankur9511/fortan_dcd_analysis.git
+`
+
+`
+cd fortan_dcd_analysis/
+`
+
+`
+chmod +x ./script
+`
+
+`
+./script "createmodule"
+`
+
+`
+python calculations.py
+`
