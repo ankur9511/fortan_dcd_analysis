@@ -19,6 +19,8 @@ Requirements:
 
 #### To make a python usable module, run
 
+Add the python2, intel, and gcc environment to the top of file "script"
+
 `
   ./script "createmodule"
 `
@@ -34,6 +36,8 @@ This file demonstates
 #### Test the python file on a N,P=1bar,T=300K simulation of SPC/E water in 5nm cubic box
 
 To verify, you should see stuff printed on your terminal as contained in file "output"
+
+Make sure you set the python2, intel, and gcc environment
 
 `
  ./script "createmodule" 
