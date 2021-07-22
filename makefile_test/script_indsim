@@ -1,0 +1,42 @@
+#!/bin/bash
+
+source ~/.bashrc
+iter=2
+module load python/2.7.15
+
+if [[ "$1" == *"createmodule"* ]]
+then
+module load intel
+f2py -c \
+waterdipole.f90 \
+voldensity3.f90 \
+read_header.f90 \
+qfourcalc.f90 \
+pbcwrapxy.f90 \
+pbcwrap.f90 \
+pbcdr.f90 \
+Odensity.f90 \
+findfournn.f90 \
+hbond_shell.f90 \
+densfluc_methsize.f90 \
+angle.f90 \
+t_alldyn_z5.f90 \
+initialize_K.f90 \
+3drdf.f90 \
+2drdf_broadbin_fineres.f90 \
+allframe_alldyn3.f90 allframe_qwwcalc.f90 allframe_rdf.f90  t_allframe_structureandhb.f90 \
+-m fort_analysis2 \
+--opt='-O3 -fopenmp' --fcompiler=intelem --f90flags='-fopenmp -g -traceback -check uninit' --compiler=unix -DF2PY_REPORT_ATEXIT
+
+#
+#structure_6oct_dynbonds.f90 \
+#-m fort_analysis \
+#--opt='-O3 -fopenmp' --fcompiler=intelem --f90flags='-fopenmp -g -traceback' --compiler=unix -DF2PY_REPORT_ATEXIT
+#structure_17Apr_dynbonds.f90 \
+#-m fort_analysis \
+
+echo "module created"
+module load gromacs/5.1.5-plumed
+fi
+
+
